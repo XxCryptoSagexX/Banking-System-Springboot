@@ -2,15 +2,27 @@ package com.lq.bank.model;
 
 public class Customer 
 {
+
+	private int id;
+	
 	private String name;
+	
 	private String family;
-	private String age;
-	private Branch branch;	
 	
+	private int age;
 	
+	private Branch branch;
 	
-	
-	public Customer(String name, String family, String age, Branch branch) {
+	public Customer(int id, String name, String family, int age, Branch branch) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.family = family;
+		this.age = age;
+		this.branch = branch;
+	}
+
+	public Customer(String name, String family, int age, Branch branch) {
 		super();
 		this.name = name;
 		this.family = family;
@@ -18,15 +30,16 @@ public class Customer
 		this.branch = branch;
 	}
 
-
-	public String getFamily() {
-		return family;
+	public int getId() {
+		return id;
 	}
 
 
-	public void setFamily(String family) {
-		this.family = family;
+
+	public void setId(int id) {
+		this.id = id;
 	}
+
 
 
 	public Branch getBranch() {
@@ -34,41 +47,31 @@ public class Customer
 	}
 
 
+
 	public void setBranch(Branch branch) {
 		this.branch = branch;
 	}
 
 
-	public String getFirstName() 
-	{
+
+	public String getName() {
 		return name;
 	}
-	
-	public void setFirstName(String name) 
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String getLastName() 
-	{
+	public String getFamily() {
 		return family;
 	}
-	
-	public void setLastName(String family) 
-	{
+	public void setFamily(String family) {
 		this.family = family;
 	}
-	
-	public String getAge() 
-	{
+	public int getAge() {
 		return age;
 	}
-	
-	public void setAge(String age)
-	{
+	public void setAge(int age) {
 		this.age = age;
 	}
-	
 	
 	
 	

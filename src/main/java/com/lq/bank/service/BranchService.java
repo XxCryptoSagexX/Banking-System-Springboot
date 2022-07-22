@@ -4,33 +4,60 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lq.bank.data.BranchRepository;
 import com.lq.bank.model.Branch;
 
 @Service
-public class BranchService
-{
-	public List<Map<String, Object>> listOfBranches()
-	{
+public class BranchService {
+	
+	
+	@Autowired
+	private BranchRepository branchRepository;
 		
-		List<Map<String,Object>> branchesList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> branchesInfo = new HashMap<String, Object>();
+	
+	public void newBranch(String name) {			
+		Branch newBranch = new Branch(name);		
+		branchRepository.save( newBranch );			
+	}
+	
+	
+	public List<Map> getSingleBranchInfo(int branchId){		
+		Optional<Branch> temp = branchRepository.findById(branchId);		
+		List<Map> branchList = new ArrayList<Map>();		
+		if(!temp.isEmpty()) {			
+			branchList.add( buildBranchInfo(  temp.get() )   );					
+		}	
+		return branchList;
+	}
+	
+	
+	public void deleteBranch(int branchId) {
+		Optional<Branch> temp = branchRepository.findById(branchId);
+		if(!temp.isEmpty()) {			
+			branchRepository.delete(  temp.get()  );			
+		}	
+	}
+	
+	
+	public Map buildBranchInfo(Branch branch) {		
+		Map<String, Object> branchInfo = new HashMap<String, Object>();		
+		branchInfo.put("name", branch.getBranchName());
+		branchInfo.put("branchId", branch.getBranchId());		
+		return branchInfo;		
+	}
+	
 
-/// Make sure you name the get functions appropriately
-		Branch branchA = new Branch(1, "Branch A");
-		branchesInfo.put("BranchName", branchA.getName());
-		branchesInfo.put("BranchID", branchA.getBranchID());
-
-		Map<String, Object> branchesInfo_2 = new HashMap<String, Object>();
-		Branch branchB = new Branch(2, "Branch B");
-		branchesInfo_2.put("BranchName", branchB.getName());
-		branchesInfo_2.put("BranchID", branchB.getBranchID());
-
-		branchesList.add(branchesInfo);
-		branchesList.add(branchesInfo_2);
-
-		return branchesList;
+	public List<Map> getAllbranches() {
+		List<Map> branchList = new ArrayList<Map>();
+		Iterable<Branch> allBranches = branchRepository.findAll();		
+		for( Branch t : allBranches ) {			
+			branchList.add(  buildBranchInfo(t) );	
+		}
+		return branchList;
 	}
 }

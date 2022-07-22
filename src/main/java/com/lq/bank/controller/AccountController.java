@@ -31,9 +31,9 @@ public class AccountController
 	private AccountService accountService;
 		
 	@GetMapping
-		public List<Map<String,Object>> listOfAllAccounts()
+		public List<Map> listOfAllAccounts()
 		{
-			return accountService.listOfAllAccounts();
+			return accountService.getAllAccounts();
 		}
 	@GetMapping
 	public List<Map> getAccountInfo()
