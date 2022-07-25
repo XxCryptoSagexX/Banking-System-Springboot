@@ -1,18 +1,48 @@
 package com.lq.bank.model;
 
-public class Customer 
-{
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table
+public class Customer {
+	
+	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private int id;
 	
+	@Column
 	private String name;
 	
+	@Column
 	private String family;
 	
+	@Column
 	private int age;
 	
+	@ManyToOne	
+	@JoinColumn(name="branch_id")
 	private Branch branch;
 	
+	
+	@OneToMany( mappedBy = "customer" )
+	private List<Account> accounts;
+	
+	
+	
+	public Customer() {
+		super();
+	}
+
 	public Customer(int id, String name, String family, int age, Branch branch) {
 		super();
 		this.id = id;
@@ -72,12 +102,5 @@ public class Customer
 	public void setAge(int age) {
 		this.age = age;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 }
